@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="pt-mz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Contacta Edwin Taimo através do formulário abaixo.">
+  <title>Edwin Taimo — Contacto</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/responsivo.css">
+</head>
+<body>
+
+  <a class="link-saltar" href="#conteudo">Saltar para o conteúdo</a>
+
+  <header class="cabecalho">
+    <div class="cabecalho__conteudo">
+      <a href="index.html" class="logotipo">Edwin <span>Taimo</span></a>
+      <nav aria-label="Navegação principal">
+        <ul class="menu-principal">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="about.html">Sobre</a></li>
+          <li><a href="portfolio.html">Portfólio</a></li>
+          <li><a href="hobbies.html">Hobbies</a></li>
+          <li><a href="contact.html" class="activo">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="seccao">
+      <h1 class="seccao__titulo">Contacto</h1>
+      <p class="seccao__intro">
+        Tens uma proposta, queres trocar ideias sobre tecnologia, AIESEC
+        ou carros? Preenche o formulário abaixo.
+      </p>
+
+
+
+      <form class="formulario" action="#" method="post">
+     <legend>Dados pessoais</legend>
+
+
+
+          <div class="campo">
+            <label for="nome">Nome completo</label>
+            <input type="text" id="nome" name="nome" required minlength="3" placeholder="O teu nome completo">
+          </div>
+
+          <div class="campo">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email">
+          </div>
+
+          <div class="campo">
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" name="telefone"  placeholder="877473761">
+          </div>
+    
+
+          <legend>Detalhes do contacto</legend>
+
+          <div class="campo">
+            <label for="data">Data preferida para contacto</label>
+            <input type="date" id="data" name="data">
+          </div>
+
+          <div class="campo">
+            <label for="idade">A tua idade</label>
+            <input type="number" id="idade" name="idade" min="10" max="100" placeholder="Ex: 22">
+          </div>
+
+          <div class="campo">
+            <label for="assunto">Assunto</label>
+            <select id="assunto" name="assunto">
+              <option value="">Seleciona um assunto</option>
+              <option value="projeto">Proposta de projeto</option>
+              <option value="aiesec">AIESEC / voluntariado</option>
+              <option value="automovel">Eventos automóveis</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="campo">
+            <span class="campo__rotulo">Como preferes ser contactado?</span>
+            <div class="opcoes-grupo">
+              <label class="opcao">
+                <input type="radio" name="preferencia" value="email" checked>
+                <span>Email</span>
+              </label>
+              <label class="opcao">
+                <input type="radio" name="preferencia" value="telefone">
+                <span>Telefone</span>
+              </label>
+              <label class="opcao">
+                <input type="radio" name="preferencia" value="whatsapp">
+                <span>WhatsApp</span>
+              </label>
+            </div>
+          </div>
+
+          <div class="campo">
+            <span class="campo__rotulo">Temas de interesse</span>
+            <div class="opcoes-grupo">
+              <label class="opcao">
+                <input type="checkbox" name="interesses" value="tecnologia">
+                <span>Tecnologia</span>
+              </label>
+              <label class="opcao">
+                <input type="checkbox" name="interesses" value="automoveis">
+                <span>Automóveis</span>
+              </label>
+              <label class="opcao">
+                <input type="checkbox" name="interesses" value="voluntariado">
+                <span>Voluntariado</span>
+              </label>
+            </div>
+          </div>
+
+
+
+
+
+          <div class="campo">
+            <label for="cv">Anexar ficheiro CV</label>
+            <input type="file" id="cv" name="cv" accept=".pdf,.doc,.docx">
+          </div>
+
+
+
+
+          <div class="campo">
+            <label for="mensagem">Mensagem</label>
+            <textarea id="mensagem" name="mensagem" rows="5" required minlength="10" placeholder="Escreve aqui a tua mensagem..."></textarea>
+          </div>
+
+        <button type="submit" class="btn btn--primario">
+          <i class="fa-solid fa-paper-plane" aria-hidden="true"></i> Enviar mensagem
+        </button>
+      </form>
+    </section>
+  </main>
+
+</body>
+</html>

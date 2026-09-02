@@ -1,1 +1,126 @@
-html5 e css3 m,m,m,
+<!DOCTYPE html>
+<html lang="pt-mz">
+<head>
+  <meta charset="UTF-8">
+  <!-- meta viewport: essencial para responsividade em telemóveis -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Site pessoal de Edwin Jerry Joaquim Taimo Gema.">
+  <title>Edwin Taimo — Início</title>
+
+  <!-- Google Fonts: recurso tipográfico, não é um framework de layout -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <!-- Font Awesome via CDN: apenas ícones, não é framework de layout -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/responsivo.css">
+</head>
+<body>
+
+  <a class="link-saltar" href="#conteudo">Saltar para o conteúdo</a>
+
+  <header class="cabecalho">
+    <div class="cabecalho__conteudo">
+      <a href="index.html" class="logotipo">Edwin <span>Taimo</span></a>
+      <nav aria-label="Navegação principal">
+        <ul class="menu-principal">
+          <li><a href="index.html" class="activo">Início</a></li>
+          <li><a href="about.html">Sobre</a></li>
+          <li><a href="portfolio.html">Portfólio</a></li>
+          <li><a href="hobbies.html">Hobbies</a></li>
+          <li><a href="contact.html">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+
+    <section class="heroi">
+      <div class="heroi__conteudo">
+        <div class="heroi__texto">
+          <p class="heroi__ola">Olá, eu sou</p>
+          <h1 class="heroi__nome">Edwin Jerry Joaquim<br>Taimo Gema</h1>
+          <p class="heroi__tagline">
+            Estudante de Informática, apaixonado por tecnologia, motorsport
+            e por criar coisas novas — a começar por este site, construído
+            do zero em HTML5 e CSS3.
+          </p>
+          <div class="heroi__acoes">
+            <a href="contact.html" class="btn btn--primario">
+              <i class="fa-solid fa-paper-plane"></i> Fala comigo
+            </a>
+            <a href="about.html" class="btn btn--secundario">Ver currículo</a>
+          </div>
+        </div>
+
+        <figure class="heroi__foto">
+          <img src="assets/img/avatar.jpg" alt="Retrato de Edwin Taimo, de camisa cinzenta e óculos de sol" width="300" height="300">
+        </figure>
+      </div>
+    </section>
+
+    <section class="seccao">
+      <h2 class="seccao__titulo">Um pouco sobre mim</h2>
+      <p class="seccao__intro">
+        Tenho 20 anos, vivo na Cidade da Beira e sou estudante de
+        Informática na Universidade Licungo. Sou membro da AIESEC, católico
+        e frequento a Paróquia Nossa Senhora de Fátima. Nos tempos livres
+        gosto de passear com os amigos e de viver de perto o mundo automóvel.
+      </p>
+
+      <div class="destaques">
+        <article class="destaque">
+          <i class="fa-solid fa-graduation-cap" aria-hidden="true"></i>
+          <h3>Formação</h3>
+          <p>Informática — Universidade Licungo</p>
+        </article>
+        <article class="destaque">
+          <i class="fa-solid fa-people-group" aria-hidden="true"></i>
+          <h3>Comunidade</h3>
+          <p>Membro da AIESEC</p>
+        </article>
+        <article class="destaque">
+          <i class="fa-solid fa-flag-checkered" aria-hidden="true"></i>
+          <h3>Paixão</h3>
+          <p>Motorsport, tecnologia e amigos</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="seccao">
+      <h2 class="seccao__titulo">Vídeo &amp; áudio de apresentação</h2>
+      <p class="seccao__intro">
+        Um pequeno vídeo e uma mensagem em áudio para te dares a conhecer
+        quem sou. <em>(Ficheiros de demonstração — vou substituí-los em
+        breve pelos definitivos.)</em>
+      </p>
+
+      <div class="midia-grelha">
+        <div class="midia">
+          <h3>Vídeo de apresentação</h3>
+          <!-- <video> nativo, com controls, poster e source com o atributo type -->
+          <video controls poster="assets/video/poster.jpg">
+            <source src="assets/video/demo.mp4" type="video/mp4">
+            O teu navegador não suporta a reprodução de vídeo em HTML5.
+          </video>
+        </div>
+
+        <div class="midia">
+          <h3>me conheca atraves de um áudio</h3>
+          <audio controls>
+            <source src="assets/audio/demo.mp3" type="audio/mpeg">
+          </audio>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="rodape"></footer>
+
+</body>
+</html>
