@@ -1,0 +1,799 @@
+
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  /* Cores */
+  --cor-primaria: #12294d;        /* azul profundo — cabeçalho, títulos */
+  --cor-primaria-escura: #0a1b34; /* usado nos gradientes */
+  --cor-primaria-clara: #1e5fa8;  /* azul vivo — links, detalhes */
+  --cor-destaque: #ffb100;        /* âmbar — botões e acentos (referência ao mundo automóvel) */
+  --cor-texto: #1b1f27;
+  --cor-texto-suave: #5b6472;
+  --cor-fundo: #f6f7fa;
+  --cor-superficie: #ffffff;
+  --cor-borda: #e2e6ed;
+
+  --fonte-titulo: "Space Grotesk", "Segoe UI", sans-serif;
+  --fonte-corpo: "Inter", "Segoe UI", Arial, sans-serif;
+
+  /* Escala de espaçamento (usada em padding, margin e gap) */
+  --esp-1: 0.5rem;
+  --esp-2: 1rem;
+  --esp-3: 1.5rem;
+  --esp-4: 2rem;
+  --esp-5: 3rem;
+  --esp-6: 4.5rem;
+
+  /* Outros valores reutilizados */
+  --raio: 8px;
+  --sombra: 0 10px 25px rgba(18, 41, 77, 0.14);
+  --transicao: 0.25s ease;
+}
+
+/* ---------- 3. BASE ---------------------------------------------- */
+html {
+  scroll-behavior: smooth; /* rolagem suave ao clicar em links internos */
+}
+
+body {
+  font-family: var(--fonte-corpo);
+  color: var(--cor-texto);
+  background: var(--cor-fundo);
+  line-height: 1.65;
+  /* rem = baseado no tamanho de letra da raiz -> mantém tudo proporcional
+     se o utilizador mudar o tamanho de letra do navegador (acessibilidade) */
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--fonte-titulo);
+  color: var(--cor-primaria);
+  line-height: 1.2;
+}
+
+/* clamp(mínimo, valor-fluido-com-vw, máximo) permite que o texto
+   cresça/diminua suavemente conforme a largura do ecrã (vw),
+   sem nunca ficar demasiado pequeno nem demasiado grande. */
+h1 { font-size: clamp(2rem, 4vw + 1rem, 3rem); }
+h2 { font-size: clamp(1.5rem, 2vw + 1rem, 2.1rem); }
+h3 { font-size: 1.15rem; }
+
+p { color: var(--cor-texto); }
+
+a {
+  color: var(--cor-primaria-clara);
+  text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 3px solid var(--cor-destaque);
+  outline-offset: 2px;
+}
+
+img { max-width: 100%; display: block; }
+
+ul, ol { list-style-position: inside; }
+
+/* ---------- 4. LIGAÇÃO DE SALTO (acessibilidade) ----------------
+   Permite que quem navega por teclado salte diretamente para o
+   conteúdo principal, sem ter de passar por todo o menu. */
+.link-saltar {
+  position: absolute;
+  left: -999px;
+  top: 0;
+  background: var(--cor-destaque);
+  color: var(--cor-primaria);
+  font-weight: 600;
+  padding: 0.75rem 1.25rem;
+  border-radius: 0 0 var(--raio) 0;
+  z-index: 200;
+}
+.link-saltar:focus {
+  left: 0;
+}
+
+/* ---------- 5. CABEÇALHO -----------------------------------------
+   NOTA SOBRE POSICIONAMENTO (pedido no enunciado do trabalho):
+   - static   → comportamento normal do fluxo do documento (padrão).
+   - relative → mantém o espaço original do elemento, mas permite
+                deslocá-lo visualmente com top/left/right/bottom.
+   - absolute → remove o elemento do fluxo normal; é posicionado em
+                relação ao ancestral mais próximo que tenha
+                position diferente de static.
+   - fixed    → fica sempre fixo em relação à janela do navegador
+                (viewport), mesmo quando a página tem scroll.
+   - sticky   → é um "híbrido": comporta-se como relative até o
+                elemento atingir o limite definido (aqui, top: 0)
+                e a partir daí passa a comportar-se como fixed.
+                É exatamente isto que uso no cabeçalho abaixo, para
+                o menu acompanhar o utilizador durante o scroll. */
+.cabecalho {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: var(--cor-primaria);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.18);
+}
+
+.cabecalho__conteudo {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: 1rem var(--esp-3);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--esp-2);
+}
+
+.logotipo {
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: #ffffff;
+  letter-spacing: 0.01em;
+}
+.logotipo span { color: var(--cor-destaque); }
+
+/* seletor filho direto (>): aplica-se apenas aos <li> que são
+   filhos diretos de .menu-principal, e não a "netos". */
+.menu-principal {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+  list-style: none;
+  justify-content: center;
+}
+.menu-principal > li {
+  position: relative;
+}
+
+.menu-principal a {
+  color: #ffffff;
+  font-weight: 500;
+  padding: 0.35rem 0.1rem;
+  position: relative;
+}
+
+/* pseudo-elemento ::after usado para desenhar um sublinhado
+   animado por baixo do link, sem precisar de nenhuma imagem. */
+.menu-principal a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -4px;
+  width: 0;
+  height: 2px;
+  background: var(--cor-destaque);
+  transition: width var(--transicao);
+}
+.menu-principal a:hover::after,
+.menu-principal a.activo::after {
+  width: 100%;
+}
+.menu-principal a.activo { color: var(--cor-destaque); }
+
+/* ---------- 6. BOTÕES ---------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  font-size: 0.98rem;
+  padding: 0.85rem 1.7rem;
+  border-radius: var(--raio);
+  border: 2px solid transparent;
+  cursor: pointer;
+  transition: transform var(--transicao), box-shadow var(--transicao),
+    background var(--transicao);
+}
+.btn--primario {
+  background: linear-gradient(135deg, var(--cor-destaque), #ffd166);
+  color: var(--cor-primaria);
+  box-shadow: var(--sombra);
+}
+.btn--primario:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 16px 30px rgba(255, 177, 0, 0.35);
+}
+.btn--secundario {
+  background: transparent;
+  border-color: rgba(255, 255, 255, 0.7);
+  color: #ffffff;
+}
+.btn--secundario:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+/* ---------- 7. SECÇÕES GERAIS -------------------------------------- */
+.seccao {
+  max-width: 1160px;
+  margin: 0 auto;
+  padding: var(--esp-5) var(--esp-3);
+}
+.seccao__titulo { margin-bottom: 0.5rem; }
+/* "ch" = largura média de um caractere na fonte atual; é ótimo
+   para limitar a largura de um parágrafo a uma boa medida de
+   leitura (aprox. 60-70 caracteres por linha). */
+.seccao__intro {
+  color: var(--cor-texto-suave);
+  max-width: 68ch;
+  margin-bottom: var(--esp-4);
+}
+
+/* ---------- 8. HERÓI (página inicial) ------------------------------ */
+.heroi {
+  position: relative;
+  overflow: hidden;
+  color: #ffffff;
+  padding: var(--esp-5) var(--esp-3);
+  background: linear-gradient(
+    135deg,
+    var(--cor-primaria) 0%,
+    var(--cor-primaria-escura) 100%
+  );
+}
+.heroi__conteudo {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--esp-4);
+  text-align: center;
+}
+
+/* Animação de entrada — um único momento orquestrado ao carregar
+   a página, em vez de animações espalhadas por todo o lado. */
+@keyframes entrada {
+  from { opacity: 0; transform: translateY(18px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+.heroi__texto { animation: entrada 0.8s ease both; }
+
+.heroi__ola {
+  color: var(--cor-destaque);
+  font-weight: 600;
+  margin-bottom: 0.3rem;
+}
+.heroi__nome {
+  margin: 0.2rem 0 1rem;
+  text-shadow: 0 3px 18px rgba(0, 0, 0, 0.3);
+}
+.heroi__tagline {
+  color: #d7deea;
+  font-size: 1.1rem;
+  max-width: 52ch;
+  margin: 0 auto var(--esp-3);
+}
+.heroi__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+  justify-content: center;
+}
+
+.heroi__foto {
+  position: relative;
+  width: min(70vw, 260px);
+}
+/* ::before cria uma "faixa" decorativa atrás da fotografia —
+   uma referência visual ao mundo automóvel/motorsport. */
+.heroi__foto::before {
+  content: "";
+  position: absolute;
+  inset: -14px;
+  background: linear-gradient(135deg, var(--cor-destaque), transparent 65%);
+  border-radius: var(--raio);
+  transform: rotate(-4deg);
+  z-index: 0;
+}
+.heroi__foto img {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  aspect-ratio: 1 / 1;
+  object-fit: cover;
+  border-radius: var(--raio);
+  border: 4px solid rgba(255, 255, 255, 0.18);
+  box-shadow: var(--sombra);
+}
+
+/* ---------- 9. DESTAQUES RÁPIDOS (página inicial) ------------------- */
+.destaques {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-3);
+  margin-top: var(--esp-4);
+}
+.destaque {
+  flex: 1 1 220px;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--esp-3);
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+.destaque:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra);
+}
+.destaque i {
+  color: var(--cor-primaria-clara);
+  font-size: 1.4rem;
+  margin-bottom: 0.5rem;
+}
+.destaque h3 { margin-bottom: 0.2rem; }
+.destaque p { color: var(--cor-texto-suave); font-size: 0.95rem; }
+
+/* ---------- 10. BLOCOS DE MÉDIA (vídeo/áudio) ------------------------ */
+.midia-grelha {
+  display: flex;
+  flex-direction: column;
+  gap: var(--esp-3);
+}
+.midia {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--esp-3);
+  box-shadow: 0 4px 14px rgba(18, 41, 77, 0.06);
+}
+.midia h3 { margin-bottom: 0.6rem; }
+video,
+audio {
+  width: 100%;
+  border-radius: calc(var(--raio) - 2px);
+}
+
+/* ---------- 11. PÁGINA "SOBRE" ------------------------------------- */
+.sobre__grelha {
+  display: grid;
+  gap: var(--esp-4);
+}
+
+.perfil-lateral {
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--esp-3);
+  text-align: center;
+  align-self: start;
+}
+.perfil-lateral img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid var(--cor-fundo);
+  box-shadow: var(--sombra);
+  margin: 0 auto var(--esp-2);
+}
+.perfil-lateral ul {
+  list-style: none;
+  text-align: left;
+  margin-top: var(--esp-2);
+}
+.perfil-lateral li {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-top: 1px solid var(--cor-borda);
+  font-size: 0.92rem;
+  color: var(--cor-texto-suave);
+}
+/* pseudo-classe :first-child remove a linha divisória do 1º item */
+.perfil-lateral li:first-child { border-top: none; }
+.perfil-lateral li i {
+  color: var(--cor-primaria-clara);
+  width: 18px;
+  text-align: center;
+}
+
+.sobre__conteudo article { margin-bottom: var(--esp-4); }
+.sobre__conteudo article ul { margin: 0.6rem 0 0.6rem 0.2rem; }
+.sobre__conteudo article li { margin-bottom: 0.3rem; }
+
+.sobre__conteudo figure {
+  margin-top: var(--esp-3);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  overflow: hidden;
+  background: var(--cor-superficie);
+}
+.sobre__conteudo figure img { width: 100%; height: auto; }
+.sobre__conteudo figcaption {
+  padding: 0.6rem var(--esp-2);
+  font-size: 0.88rem;
+  color: var(--cor-texto-suave);
+}
+
+/* Tabela de competências */
+.tabela-competencias {
+  width: 100%;
+  border-collapse: collapse;
+  margin: var(--esp-2) 0;
+  font-size: 0.95rem;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+}
+.tabela-competencias caption {
+  text-align: left;
+  font-weight: 600;
+  color: var(--cor-primaria);
+  margin-bottom: 0.5rem;
+}
+.tabela-competencias th,
+.tabela-competencias td {
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--cor-borda);
+  text-align: center;
+}
+.tabela-competencias td:first-child,
+.tabela-competencias th:first-child { text-align: left; }
+.tabela-competencias thead th {
+  background: var(--cor-primaria);
+  color: #ffffff;
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+}
+/* pseudo-classe :nth-child(even/odd) para criar linhas "zebra" */
+.tabela-competencias tbody tr:nth-child(even) { background: #f0f3f8; }
+.tabela-competencias tbody tr:hover { background: #e7eef9; }
+
+/* Citação / frase de efeito */
+.citacao {
+  position: relative;
+  background: var(--cor-primaria);
+  color: #ffffff;
+  padding: var(--esp-4) var(--esp-3) var(--esp-3);
+  border-radius: var(--raio);
+  margin-top: var(--esp-4);
+  font-family: var(--fonte-titulo);
+  font-size: 1.1rem;
+  font-style: italic;
+}
+.citacao::before {
+  content: "\201C"; /* aspas decorativas */
+  position: absolute;
+  top: -6px;
+  left: 18px;
+  font-family: Georgia, serif;
+  font-size: 4rem;
+  color: var(--cor-destaque);
+  opacity: 0.75;
+  line-height: 1;
+}
+.citacao cite {
+  display: block;
+  margin-top: 0.8rem;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--cor-destaque);
+}
+
+/* ---------- 12. PORTFÓLIO (CSS GRID) --------------------------------
+   grid-template-columns com repeat()/auto-fit/minmax() cria colunas
+   automaticamente: tantas quantas couberem, com no mínimo 250px,
+   sem precisar de media queries só para isto. */
+.grelha-portfolio {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--esp-4);
+}
+
+.projeto {
+  position: relative;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  overflow: hidden;
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+/* ::before desenha uma barra de destaque no topo de cada cartão */
+.projeto::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px;
+  background: var(--cor-destaque);
+  z-index: 2;
+}
+/* pseudo-classe :nth-child() para variar a cor da barra de cada cartão */
+.projeto:nth-child(2)::before { background: var(--cor-primaria-clara); }
+.projeto:nth-child(3)::before { background: #2e9e6b; }
+
+.projeto:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--sombra);
+}
+.projeto img {
+  width: 100%;
+  height: 190px;
+  object-fit: cover;
+}
+.projeto__corpo { padding: var(--esp-3); }
+.projeto__corpo h3 { margin-bottom: 0.4rem; }
+.projeto__corpo p { color: var(--cor-texto-suave); font-size: 0.95rem; }
+.projeto__tag {
+  display: inline-block;
+  margin-top: var(--esp-2);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--cor-primaria-clara);
+  background: rgba(30, 95, 168, 0.09);
+  padding: 0.3rem 0.7rem;
+  border-radius: 20px;
+}
+
+/* "Mock-up" de navegador feito só com HTML/CSS, para representar
+   este próprio site no cartão de projeto (sem precisar de captura
+   de ecrã). Usa :first-child, :nth-child() e :last-child juntos. */
+.mockup-navegador {
+  height: 190px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, var(--cor-primaria-escura), var(--cor-primaria));
+}
+.mockup-navegador__barra {
+  display: flex;
+  gap: 6px;
+  padding: 10px 12px;
+  background: rgba(0, 0, 0, 0.25);
+}
+.mockup-navegador__ponto {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: #3a4a66;
+}
+.mockup-navegador__ponto:first-child { background: #ff6b6b; }
+.mockup-navegador__ponto:nth-child(2) { background: #ffd166; }
+.mockup-navegador__ponto:last-child { background: #4ade80; }
+.mockup-navegador__ecra {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 0 1rem;
+  color: var(--cor-destaque);
+  font-family: var(--fonte-titulo);
+  font-weight: 700;
+}
+.mockup-navegador--verde {
+  background: linear-gradient(135deg, #103a2b, #1c5c42);
+}
+.mockup-navegador--verde .mockup-navegador__ecra { color: #7be6b4; }
+
+/* ---------- 13. HOBBIES (FLEXBOX) -----------------------------------
+   flex-wrap permite que os cartões passem para a linha seguinte
+   quando não há espaço; justify-content/align-items controlam o
+   alinhamento horizontal/vertical dentro da linha. */
+.lista-hobbies {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: stretch;
+  gap: var(--esp-4);
+}
+.hobby-cartao {
+  flex: 1 1 260px;
+  max-width: 340px;
+  background: var(--cor-superficie);
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform var(--transicao), box-shadow var(--transicao);
+}
+.hobby-cartao:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--sombra);
+}
+.hobby-cartao img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+}
+/* mini-galeria dentro de um único cartão, também com Flexbox */
+.hobby-cartao__galeria { display: flex; }
+.hobby-cartao__galeria img { flex: 1 1 50%; height: 160px; }
+.hobby-cartao__corpo { padding: var(--esp-3); }
+.hobby-cartao h3 {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-bottom: 0.3rem;
+  font-size: 1.05rem;
+}
+.hobby-cartao h3 i { color: var(--cor-destaque); }
+.hobby-cartao p { color: var(--cor-texto-suave); font-size: 0.93rem; }
+
+/* ---------- 14. FORMULÁRIO DE CONTACTO ------------------------------- */
+.formulario fieldset {
+  border: 1px solid var(--cor-borda);
+  border-radius: var(--raio);
+  padding: var(--esp-3);
+  margin-bottom: var(--esp-3);
+  background: var(--cor-superficie);
+}
+.formulario legend {
+  padding: 0 0.5rem;
+  font-family: var(--fonte-titulo);
+  font-weight: 600;
+  color: var(--cor-primaria);
+}
+.campo { margin-bottom: var(--esp-3); }
+.campo:last-child { margin-bottom: 0; }
+.campo label,
+.campo__rotulo {
+  display: block;
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+  font-size: 0.92rem;
+}
+/* seletor de irmão adjacente (+): aplica um espaçamento apenas ao
+   campo que vem LOGO a seguir a um label dentro de .campo */
+.campo label + input,
+.campo label + select,
+.campo label + textarea {
+  margin-top: 0.15rem;
+}
+
+input,
+select,
+textarea {
+  width: 100%;
+  font-family: var(--fonte-corpo);
+  font-size: 1rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 6px;
+  background: #ffffff;
+  color: var(--cor-texto);
+  transition: border-color var(--transicao), box-shadow var(--transicao);
+}
+input:focus,
+select:focus,
+textarea:focus {
+  outline: none;
+  border-color: var(--cor-primaria-clara);
+  box-shadow: 0 0 0 3px rgba(30, 95, 168, 0.15);
+}
+
+input[type="date"],
+input[type="number"] {
+  max-width: 240px;
+}
+input[type="file"] {
+  padding: 0.55rem;
+  background: var(--cor-fundo);
+}
+
+textarea { resize: vertical; min-height: 120px; }
+
+.opcoes-grupo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-2);
+}
+.opcao {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  padding: 0.55rem 1rem;
+  border: 1px solid var(--cor-borda);
+  border-radius: 30px;
+  cursor: pointer;
+  font-size: 0.92rem;
+  transition: border-color var(--transicao), background var(--transicao);
+}
+.opcao:hover { border-color: var(--cor-primaria-clara); }
+
+/* appearance: none remove o visual padrão do navegador para o
+   radio/checkbox, para podermos desenhar o nosso próprio estilo. */
+.opcao input[type="radio"],
+.opcao input[type="checkbox"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
+  margin: 0;
+  border: 2px solid var(--cor-texto-suave);
+  border-radius: 50%;
+  display: grid;
+  place-content: center;
+  cursor: pointer;
+}
+.opcao input[type="checkbox"] { border-radius: 4px; }
+.opcao input[type="radio"]::before,
+.opcao input[type="checkbox"]::before {
+  content: "";
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--cor-destaque);
+  transform: scale(0);
+  transition: transform var(--transicao);
+}
+.opcao input[type="checkbox"]::before { border-radius: 2px; }
+/* pseudo-classe :checked mostra o "miolo" colorido quando selecionado */
+.opcao input:checked::before { transform: scale(1); }
+.opcao input:checked { border-color: var(--cor-primaria-clara); }
+
+.formulario__nota {
+  font-size: 0.85rem;
+  color: var(--cor-texto-suave);
+  margin-bottom: var(--esp-3);
+}
+.formulario .btn { margin-top: 0.5rem; }
+
+/* ---------- 15. RODAPÉ ------------------------------------------------ */
+.rodape {
+  background: var(--cor-primaria);
+  color: #d7deea;
+  margin-top: var(--esp-6);
+  padding: var(--esp-5) var(--esp-3) var(--esp-3);
+}
+.rodape__conteudo {
+  max-width: 1160px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--esp-4);
+  justify-content: space-between;
+}
+.rodape__coluna h3 {
+  color: var(--cor-destaque);
+  font-size: 1rem;
+  margin-bottom: var(--esp-1);
+}
+.rodape__coluna p { margin-bottom: 0.3rem; font-size: 0.92rem; }
+.rodape__coluna a { color: #d7deea; }
+.rodape__coluna a:hover { color: var(--cor-destaque); }
+.rodape__coluna p i { width: 16px; color: var(--cor-destaque); }
+
+.rodape__redes { display: flex; gap: var(--esp-1); margin-top: var(--esp-2); }
+.rodape__redes a {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.08);
+  transition: background var(--transicao), transform var(--transicao);
+}
+.rodape__redes a:hover {
+  background: var(--cor-destaque);
+  color: var(--cor-primaria);
+  transform: translateY(-3px);
+}
+
+.rodape__assinatura {
+  text-align: center;
+  margin-top: var(--esp-4);
+  padding-top: var(--esp-3);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 0.88rem;
+  color: #a9b4c6;
+}
