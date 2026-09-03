@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="pt-mz">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Hobbies e interesses de Edwin Taimo: amigos, automobilismo, boxe e futebol.">
+  <title>Edwin Taimo — Hobbies</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <link rel="stylesheet" href="css/estilo.css">
+  <link rel="stylesheet" href="css/responsivo.css">
+</head>
+<body>
+
+  <a class="link-saltar" href="#conteudo">Saltar para o conteúdo</a>
+
+  <header class="cabecalho">
+    <div class="cabecalho__conteudo">
+      <a href="index.html" class="logotipo">Edwin <span>Taimo</span></a>
+      <nav aria-label="Navegação principal">
+        <ul class="menu-principal">
+          <li><a href="index.html">Início</a></li>
+          <li><a href="about.html">Sobre</a></li>
+          <li><a href="portfolio.html">Portfólio</a></li>
+          <li><a href="hobbies.html" class="activo">Hobbies</a></li>
+          <li><a href="contact.html">Contacto</a></li>
+        </ul>
+      </nav>
+    </div>
+  </header>
+
+  <main id="conteudo">
+    <section class="seccao">
+      <h1 class="seccao__titulo">Hobbies &amp; Interesses</h1>
+      <p class="seccao__intro">
+        Quando não estou a estudar, gosto de aproveitar o tempo livre com
+        os amigos, viver o ambiente automóvel da Beira e manter-me ativo.
+      </p>
+
+      <!-- lista de cartões construída com Flexbox (flex-wrap, gap,
+           justify-content e align-items), definida em estilo.css -->
+      <div class="lista-hobbies">
+
+        <article class="hobby-cartao">
+          <img src="assets/img/hobby-amigos.jpg" alt="Edwin e um amigo sentados num baloiço de madeira, à noite, numa esplanada" width="500" height="650">
+          <div class="hobby-cartao__corpo">
+            <h3><i class="fa-solid fa-people-group" aria-hidden="true"></i> Sair com amigos</h3>
+            <p>Adoro relaxar e passear com os meus amigos — bons momentos de conversa e descontração fazem parte da minha rotina.</p>
+          </div>
+        </article>
+
+        <article class="hobby-cartao">
+          <div class="hobby-cartao__galeria">
+            <img src="assets/img/hobby-carro-1.jpg" alt="Carro desportivo azul com pintura do Bart Simpson, sobre um reboque, à noite" width="300" height="220">
+            <img src="assets/img/hobby-carro-2.jpg" alt="Amigo ao lado de um carro de drift com pintura Red Bull, num evento automóvel" width="300" height="220">
+          </div>
+          <div class="hobby-cartao__corpo">
+            <h3><i class="fa-solid fa-flag-checkered" aria-hidden="true"></i> Eventos automóveis</h3>
+            <p>Sou apaixonado pelo mundo automóvel — gosto de acompanhar e ajudar os meus amigos nos seus eventos e encontros de carros.</p>
+          </div>
+        </article>
+
+        <article class="hobby-cartao">
+          <img src="assets/img/hobby-boxe.jpg" alt="Edwin em pose de boxe, com luvas, em fotografia a preto e branco" width="500" height="700">
+          <div class="hobby-cartao__corpo">
+            <h3><i class="fa-solid fa-hand-fist" aria-hidden="true"></i> Boxe &amp; desporto</h3>
+            <p>Treinar boxe ajuda-me a manter a disciplina e a energia em dia — é uma boa forma de aliviar o stress dos estudos.</p>
+          </div>
+        </article>
+
+        <article class="hobby-cartao">
+          <img src="assets/img/hobby-futebol.jpg" alt="Camisola de futebol amarela personalizada com o nome Edwin, vista de costas" width="500" height="700">
+          <div class="hobby-cartao__corpo">
+            <h3><i class="fa-solid fa-futbol" aria-hidden="true"></i> Mindset</h3>
+            <p>Tambem gosto de dar pausas para refletir ate onde eu cheguei e onde eu vou, tanto de forma estoica como emocional, pois a vida e uma mistura de tudo.</p>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="rodape">
+    <div class="rodape__conteudo">
+      <div class="rodape__coluna">
+        <h3>Edwin Taimo</h3>
+        <p>Estudante de Informática</p>
+        <p>Desenvolvidor de Softwaree</p>
+      </div>
+      <div class="rodape__coluna">
+        <h3>Contactos</h3>
+        <p><i class="fa-solid fa-envelope" aria-hidden="true"></i> edwingema03@gmail.com</p>
+        <p><i class="fa-solid fa-phone" aria-hidden="true"></i> +258 87 747 3761</p>
+        <p><i class="fa-solid fa-phone" aria-hidden="true"></i> +258 83 397 3761</p>
+        <p><i class="fa-solid fa-location-dot" aria-hidden="true"></i> Beira, Sofala,Moçambique</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
